@@ -177,10 +177,10 @@ static void print_version(void)
 {
 	// print version & information
     print("\n\t- Version -\n");
-    print("DESC: " STR(DESCRIPTION) "\n");
-    print("VID: " STR(VENDOR_ID) "(" STR(MANUFACTURER) ") "
-          "PID: " STR(PRODUCT_ID) "(" STR(PRODUCT) ") "
-          "VER: " STR(DEVICE_VER) "\n");
+    // print("DESC: " STR(DESCRIPTION) "\n");
+    // print("VID: " STR(VENDOR_ID) "(" STR(MANUFACTURER) ") "
+    //       "PID: " STR(PRODUCT_ID) "(" STR(PRODUCT) ") "
+    //       "VER: " STR(DEVICE_VER) "\n");
 #ifdef SKIP_VERSION
     print("BUILD:  (" __DATE__ ")\n");
 #else

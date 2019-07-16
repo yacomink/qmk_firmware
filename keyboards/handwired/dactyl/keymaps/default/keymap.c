@@ -16,7 +16,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |   =  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  -   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Del  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  \   |
+ * | Tag  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  \   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * | BkSp |   A  |   S  |   D  |   F  |   G  |                    |   H  |   J  |   K  |   L  |; / L2|'/Cmd |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -34,23 +34,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [BASE] = LAYOUT_dactyl(  // layer 0 : default
         // left hand
-           KC_EQL,         KC_1,           KC_2,     KC_3,     KC_4,  KC_5,
-          KC_DELT,         KC_Q,           KC_W,     KC_E,     KC_R,  KC_T,
-          KC_BSPC,         KC_A,           KC_S,     KC_D,     KC_F,  KC_G,
-          KC_LSFT,  CTL_T(KC_Z),           KC_X,     KC_C,     KC_V,  KC_B,
-  LT(SYMB,KC_GRV),      KC_QUOT,  LALT(KC_LSFT),  KC_LEFT,  KC_RGHT,
-                                                                      ALT_T(KC_APP),  KC_LGUI,
+          KC_EQL,       KC_1,    KC_2,     KC_3,     KC_4,  KC_5,
+          KC_TAB,       KC_Q,    KC_W,     KC_E,     KC_R,  KC_T,
+          KC_LCTL,      KC_A,    KC_S,     KC_D,     KC_F,  KC_G,
+          KC_LSFT,      KC_Z,    KC_X,     KC_C,     KC_V,  KC_B,
+  LT(SYMB,KC_GRV),      KC_GRV,  KC_BSLS,  KC_LEFT,  KC_RGHT,
+                                                                      KC_LGUI, KC_LALT,
                                                                                       KC_HOME,
-                                                             KC_SPC,        KC_BSPC,   KC_END,
+                                                             KC_BSPC,        KC_DELT,   KC_END,
         // right hand
                              KC_6,   KC_7,     KC_8,     KC_9,               KC_0,         KC_MINS,
                              KC_Y,   KC_U,     KC_I,     KC_O,               KC_P,         KC_BSLS,
-                             KC_H,   KC_J,     KC_K,     KC_L,  LT(MDIA, KC_SCLN),  GUI_T(KC_QUOT),
-                             KC_N,   KC_M,  KC_COMM,   KC_DOT,     CTL_T(KC_SLSH),         KC_RSFT,
+                             KC_H,   KC_J,     KC_K,     KC_L,  LT(MDIA, KC_SCLN),         KC_QUOT,
+                             KC_N,   KC_M,  KC_COMM,   KC_DOT,     KC_SLSH,         KC_RSFT,
                                     KC_UP,  KC_DOWN,  KC_LBRC,            KC_RBRC,          TT(SYMB),
           KC_RALT,  CTL_T(KC_ESC),
           KC_PGUP,
-          KC_PGDN, KC_TAB, KC_ENT
+          KC_PGDN, KC_ENT, KC_SPC
     ),
 /* Keymap 1: Symbol Layer
  *
@@ -175,3 +175,11 @@ void matrix_init_user(void) {
 
 // Runs constantly in the background, in a loop.
 void matrix_scan_user(void) {};
+
+void keyboard_post_init_user(void) {
+  // Customise these values to desired behaviour
+  debug_enable=true;
+  debug_matrix=true;
+  //debug_keyboard=true;
+  //debug_mouse=true;
+}
