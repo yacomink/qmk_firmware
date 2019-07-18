@@ -8,6 +8,7 @@
 enum custom_keycodes {
   PLACEHOLDER = SAFE_RANGE, // ensure these codes start after the highest keycode defined in Quantum
   VRSN,
+  VSCODE_KEEP,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -22,7 +23,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |LShift|Z/Ctrl|   X  |   C  |   V  |   B  |                    |   N  |   M  |   ,  |   .  |//Ctrl|RShift|
  * |------+------+------+------+------+------'                    `------+------+------+------+------+------|
- * |Grv/L1|  '"  |AltShf| Left | Right|                                  |  Up  | Down |   [  |   ]  | ~L1  |
+ * |SYMB|  '"  |AltShf| Left | Right|                                  |  Up  | Down |   [  |   ]  | ~L1  |
  * `----------------------------------'                                  `----------------------------------'
  *                                      ,-------------.  ,-------------.
  *                                      | App  | LGui |  | Alt  | ^/Esc|
@@ -34,21 +35,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [BASE] = LAYOUT_dactyl(  // layer 0 : default
         // left hand
-          KC_EQL,       KC_1,    KC_2,     KC_3,     KC_4,  KC_5,
-          KC_TAB,       KC_Q,    KC_W,     KC_E,     KC_R,  KC_T,
-          KC_LCTL,      KC_A,    KC_S,     KC_D,     KC_F,  KC_G,
-          KC_LSFT,      KC_Z,    KC_X,     KC_C,     KC_V,  KC_B,
-  LT(SYMB,KC_GRV),      KC_GRV,  KC_BSLS,  KC_LEFT,  KC_RGHT,
-                                                                      KC_LGUI, KC_LALT,
+          MT(KC_ESC, KC_EQL), KC_1,    KC_2,     KC_3,     KC_4,  KC_5,
+          KC_TAB,             KC_Q,    KC_W,     KC_E,     KC_R,  KC_T,
+          KC_LCTL,            KC_A,    KC_S,     KC_D,     KC_F,  KC_G,
+          KC_LSFT,            KC_Z,    KC_X,     KC_C,     KC_V,  KC_B,
+      VSCODE_KEEP,            KC_GRV,  KC_BSLS,  KC_LEFT,  KC_RGHT,
+                                                                            KC_LGUI, KC_LALT,
                                                                                       KC_HOME,
                                                              KC_BSPC,        KC_DELT,   KC_END,
         // right hand
                              KC_6,   KC_7,     KC_8,     KC_9,               KC_0,         KC_MINS,
                              KC_Y,   KC_U,     KC_I,     KC_O,               KC_P,         KC_BSLS,
-                             KC_H,   KC_J,     KC_K,     KC_L,  LT(MDIA, KC_SCLN),         KC_QUOT,
+                             KC_H,   KC_J,     KC_K,     KC_L,  KC_SCLN,         KC_QUOT,
                              KC_N,   KC_M,  KC_COMM,   KC_DOT,     KC_SLSH,         KC_RSFT,
-                                    KC_UP,  KC_DOWN,  KC_LBRC,            KC_RBRC,          TT(SYMB),
-          KC_RALT,  CTL_T(KC_ESC),
+                                    KC_UP,  KC_DOWN,  KC_LBRC,            KC_RBRC,          MO(SYMB),
+          KC_RALT,  KC_ESC,
           KC_PGUP,
           KC_PGDN, KC_ENT, KC_SPC
     ),
@@ -89,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_UP,       KC_7,    KC_8,  KC_9, KC_ASTR,   KC_F12,
                 KC_DOWN,     KC_4,    KC_5,  KC_6, KC_PLUS,  KC_TRNS,
                 KC_AMPR,     KC_1,    KC_2,  KC_3, KC_BSLS,  KC_TRNS,
-                          KC_TRNS,  KC_DOT,  KC_0,  KC_EQL,  KC_TRNS,
+                          KC_TRNS,  KC_DOT,  KC_0,  KC_EQL,  TG(BASE),
       KC_TRNS,  KC_TRNS,
       KC_TRNS,
       KC_TRNS,  KC_TRNS,  KC_TRNS
@@ -163,6 +164,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case VSCODE_KEEP:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LGUI("k"));
+        SEND_STRING(SS_TAP(X_ENTER));
+      }
+      break;
   }
   return true;
 }
@@ -178,8 +185,8 @@ void matrix_scan_user(void) {};
 
 void keyboard_post_init_user(void) {
   // Customise these values to desired behaviour
-  debug_enable=true;
-  debug_matrix=true;
+//  debug_enable=true;
+//  debug_matrix=true;
   //debug_keyboard=true;
   //debug_mouse=true;
 }
