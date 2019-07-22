@@ -9,8 +9,40 @@ enum custom_keycodes {
   PLACEHOLDER = SAFE_RANGE, // ensure these codes start after the highest keycode defined in Quantum
   VRSN,
   VSCODE_KEEP,
+  CLIP
 };
 
+enum combos {
+  EQ1_ESC,
+  PG_KEEP,
+  HOME_CLIP
+};
+
+const uint16_t PROGMEM eq1_combo[] = {KC_EQL, KC_1, COMBO_END};
+const uint16_t PROGMEM pg_keep_combo[] = {KC_PGUP, KC_PGDN, COMBO_END};
+const uint16_t PROGMEM home_clip_combo[] = {KC_HOME, KC_END, COMBO_END};
+
+combo_t key_combos[COMBO_COUNT] = {
+  [EQ1_ESC] = COMBO(eq1_combo, KC_ESC),
+  [PG_KEEP] = COMBO_ACTION(pg_keep_combo),
+  [HOME_CLIP] = COMBO_ACTION(home_clip_combo)
+};
+
+void process_combo_event(uint8_t combo_index, bool pressed) {
+  switch(combo_index) {
+    case PG_KEEP:
+      if (pressed) {
+        SEND_STRING(SS_LGUI("k"));
+        SEND_STRING(SS_TAP(X_ENTER));
+      }
+      break;
+    case HOME_CLIP:
+      if (pressed) {
+        SEND_STRING(SS_LGUI(SS_LALT("c")));
+      }
+      break;
+  }
+}
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Basic layer
  *
@@ -168,6 +200,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         SEND_STRING(SS_LGUI("k"));
         SEND_STRING(SS_TAP(X_ENTER));
+      }
+      break;
+    case CLIP:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LGUI(SS_LALT("c")));
       }
       break;
   }
