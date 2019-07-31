@@ -71,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           KC_TAB,             KC_Q,    KC_W,     KC_E,     KC_R,  KC_T,
           KC_LCTL,            KC_A,    KC_S,     KC_D,     KC_F,  KC_G,
           KC_LSFT,            KC_Z,    KC_X,     KC_C,     KC_V,  KC_B,
-      VSCODE_KEEP,            KC_GRV,  KC_BSLS,  KC_LEFT,  KC_RGHT,
+          MO(SYMB),           KC_GRV,  KC_BSLS,  KC_LEFT,  KC_RGHT,
                                                                       KC_LGUI,  KC_LALT,
                                                                                 KC_HOME,
                                                            KC_BSPC,   KC_DELT,   KC_END,
@@ -86,15 +86,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           KC_PGDN, KC_ENT, KC_SPC
     ),
 /* Keymap 1: Symbol Layer
- *
+ * W - Spectacle app shortcuts for moving current window
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |Versn |  F1  |  F2  |  F3  |  F4  |  F5  |                    |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |   !  |   @  |   {  |   }  |   |  |                    |  Up  |   7  |   8  |   9  |   *  |  F12 |
+ * |      |   !  | W(TL)|W(PRV)| W(TR)|   |  |                    |  Up  |   7  |   8  |   9  |   *  |  F12 |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |   #  |   $  |   (  |   )  |   `  |                    | Down |   4  |   5  |   6  |   +  |      |
+ * |      |   #  | W(LH)|W(UND)| W(RH)|   `  |                    | Down |   4  |   5  |   6  |   +  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |   %  |   ^  |   [  |   ]  |   ~  |                    |   &  |   1  |   2  |   3  |   \  |      |
+ * |      |   %  | W(BL)|W(NXT)| W(BR)|   ~  |                    |   &  |   1  |   2  |   3  |   \  |      |
  * |------+------+------+------+------+------'                    `------+------+------+------+------+------|
  * |RESET |      |      |      |      |                                  |      |   .  |   0  |   =  |      |
  * `----------------------------------'                                  `----------------------------------'
@@ -110,9 +110,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [SYMB] = LAYOUT_dactyl(
        // left hand
           VRSN,    KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,
-       KC_TRNS,  KC_EXLM,    KC_AT,  KC_LCBR,  KC_RCBR,  KC_PIPE,
-       KC_TRNS,  KC_HASH,   KC_DLR,  KC_LPRN,  KC_RPRN,   KC_GRV,
-       KC_TRNS,  KC_PERC,  KC_CIRC,  KC_LBRC,  KC_RBRC,  KC_TILD,
+       KC_TRNS,  KC_EXLM,  LSFT(LCTL(LGUI(KC_COMM))),  LCTL(LGUI(KC_UP)),    LSFT(LCTL(LGUI(KC_DOT))),  KC_PIPE,
+       KC_TRNS,  KC_HASH,  LCTL(LGUI(KC_LEFT)),        LCTL(LGUI(KC_Z)),     LCTL(LGUI(KC_RIGHT)),   KC_GRV,
+       KC_TRNS,  KC_PERC,  LCTL(LGUI(KC_COMM)),        LCTL(LGUI(KC_DOWN)),  LCTL(LGUI(KC_DOT)),  KC_TILD,
          RESET,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
                                                          KC_TRNS,  KC_TRNS,
                                                                    KC_TRNS,
@@ -226,4 +226,8 @@ void keyboard_post_init_user(void) {
 //  debug_matrix=true;
   //debug_keyboard=true;
   //debug_mouse=true;
+}
+
+void eeconfig_init_user(void) {
+    set_unicode_input_mode(UC_OSX);
 }
