@@ -3,7 +3,7 @@
 
 #define BASE 0 // default layer
 #define SYMB 1 // symbols
-#define MDIA 2 // media keys
+#define UPDWN 2 // upside down ascii
 
 enum custom_keycodes {
   PLACEHOLDER = SAFE_RANGE, // ensure these codes start after the highest keycode defined in Quantum
@@ -43,6 +43,8 @@ void process_combo_event(uint8_t combo_index, bool pressed) {
       break;
   }
 }
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Basic layer
  *
@@ -71,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           KC_TAB,             KC_Q,    KC_W,     KC_E,     KC_R,  KC_T,
           KC_LCTL,            KC_A,    KC_S,     KC_D,     KC_F,  KC_G,
           KC_LSFT,            KC_Z,    KC_X,     KC_C,     KC_V,  KC_B,
-          MO(SYMB),           KC_GRV,  KC_BSLS,  KC_LEFT,  KC_RGHT,
+          MO(UPDWN),           KC_GRV,  KC_BSLS,  KC_LEFT,  KC_RGHT,
                                                                       KC_LGUI,  KC_LALT,
                                                                                 KC_HOME,
                                                            KC_BSPC,   KC_DELT,   KC_END,
@@ -148,27 +150,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                               `--------------------'  `--------------------'
  *
  */
-// MEDIA AND MOUSE
-[MDIA] = LAYOUT_dactyl(
-       KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
-       KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_MS_U,  KC_TRNS,  KC_TRNS,
-       KC_TRNS,  KC_TRNS,  KC_MS_L,  KC_MS_D,  KC_MS_R,  KC_TRNS,
-       KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
-       KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_BTN1,  KC_BTN2,
+
+[UPDWN] = LAYOUT_dactyl(
+       KC_TRNS,  KC_TRNS,  KC_TRNS,  UC(0x0190),  UC(L'ᔭ'),  KC_TRNS,
+       KC_TRNS,  UC(L'Ό'),  UC(L'ʍ'), UC( L'ǝ'),  UC(L'ɹ'),  UC(L'ʇ'),
+       KC_TRNS,  UC(L'ɐ'),  KC_TRNS,  UC(L'p'),  UC(L'ɟ'),  UC(L'ƃ'),
+       KC_TRNS,  KC_TRNS,  KC_TRNS,  UC(L'ɔ'),  UC(L'ʌ'),  UC(L'q'),
+       KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
                                                          KC_TRNS,  KC_TRNS,
                                                                    KC_TRNS,
                                                KC_TRNS,  KC_TRNS,  KC_TRNS,
     // right hand
-                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
-                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
-                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_MPLY,
-                KC_TRNS,  KC_TRNS,  KC_MPRV,  KC_MNXT,  KC_TRNS,  KC_TRNS,
-                          KC_VOLU,  KC_VOLD,  KC_MUTE,  KC_TRNS,  KC_TRNS,
+                UC(L'9'),  UC(L'Ɫ'),  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+                UC(L'ʎ'),  UC(L'∩'),  UC(L'ı'),  KC_TRNS,  UC(L'Ԁ'),  KC_TRNS,
+                UC(L'ɥ'),  UC(L'ɾ'),  UC(L'ʞ'),  UC(L'ʃ'),  UC(L'؛'),  KC_TRNS,
+                UC(L'u'),  UC(L'ɯ'),  UC(L'\''),  UC(L'˙'),  UC(L'¿'),  KC_TRNS,
+                          KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
       KC_TRNS,  KC_TRNS,
       KC_TRNS,
-      KC_TRNS,  KC_TRNS,  KC_WBAK
+      KC_TRNS,  KC_TRNS,  KC_TRNS
 ),
 };
+
+
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
@@ -228,6 +232,3 @@ void keyboard_post_init_user(void) {
   //debug_mouse=true;
 }
 
-void eeconfig_init_user(void) {
-    set_unicode_input_mode(UC_OSX);
-}

@@ -80,6 +80,7 @@ COMMAND_ENABLE          = yes  # Commands for debug and configuration
 CUSTOM_MATRIX           = yes # Custom matrix file for the Dactyl
 NKRO_ENABLE             = yes # USB Nkey Rollover
 UNICODE_ENABLE          = yes # Unicode
+# UNICODEMAP_ENABLE		= yes
 SWAP_HANDS_ENABLE       = yes # Allow swapping hands of keyboard
 SLEEP_LED_ENABLE        = no
 API_SYSEX_ENABLE        = no
